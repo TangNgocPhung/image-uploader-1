@@ -14,19 +14,20 @@
    <div class="container">
     <div class="py-5 text-center bg-secondary text-white">
      <h1 class="mb-3">Upload Image</h1>
-     <form action="" method="post" enctype="multipart/form-data">
+     <form action="{% url 'myapp:addimage' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
-      {{form}}
-      <input type="submit" class="btn btn-danger" value="Upload">
+      <input type="file" name ="file"> 
+      <button type="submit" class="btn btn-dark">Upload</button>
      </form>
     </div>
     <div class="row">
      {% for x in img %}
       <div class="col-sm-4">
        <div class="card m-2">
-        <img src="{{x.photo.url}}" alt="" class="card-img-top" height="200px">
+        <img src="{{x.photo}}" alt="" class="card-img-top" height="200px">
         <div class="card-footer">
          <small class="text-muted">{{x.date}}</small>
+         <a href="{% url 'myapp:deleteimage' x.id %}" onclick="return confirm('Are you want to delete?')"> <button type="button" class="btn btn-dark">Delete</button> </a>
         </div>
        </div>
       </div>
@@ -34,6 +35,32 @@
     </div>
    </div>
 
+
+   <div class="container">
+    <div class="py-5 text-center bg-secondary text-white">
+     <h1 class="mb-3">Upload File</h1>
+     <form action="{% url 'myapp:addfile' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="file" name ="file_path" multiple> 
+      <button type="submit" class="btn btn-dark">Upload File </button>
+     </form>
+    </div>
+     </div>
+
+
+
+     <div class="row">
+      {% for x in file %}
+       <div class="col-sm-4">
+        <div class="card m-2">
+         <p> {{x.file}} </p>
+         <div class="card-footer">
+          <a href = "{% url 'myapp:downloadFile' x.id %}" class ="btn btn-sm btn-success text-center m-auto mr-100" style="margin-right: 50px; display: inline-block;" > Download File </a>
+         </div>
+        </div>
+       </div>
+      {% endfor %}
+     </div>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
